@@ -1,7 +1,8 @@
 import Hero from "@/components/Hero"
 import Navbar from "@/components/Navbar"
-import EmptySpace from "@/components/EmptySpace"
 import Explore from "@/components/Explore"
+import About from "@/components/About"
+import Footer from "@/components/Footer"
 
 const Home = () => {
   return (
@@ -9,7 +10,8 @@ const Home = () => {
       <Navbar />
       <Hero />
       <Explore />
-      <EmptySpace />
+      <About />
+      <Footer />
     </div>
   )
 }
