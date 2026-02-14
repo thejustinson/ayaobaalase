@@ -52,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${playfairDisplay.variable} ${geologica.variable} overflow-x-hidden  antialiased`}
+        className={`${playfairDisplay.variable} ${geologica.variable}  max-w-screen overflow-x-hidden antialiased`}
       >
         {children}
       </body>
