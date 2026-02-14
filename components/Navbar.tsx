@@ -1,12 +1,16 @@
 "use client"
 
-import { RiMenuLine, RiShoppingCartLine, RiUserLine, RiCloseLine } from "@remixicon/react"
-import Image from "next/image"
+import { RiMenuLine, RiShoppingCartLine, RiUserLine, RiCloseLine } from "@remixicon/react"  
+import Link from "next/link"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import LogoSVG from "./SVGs/logo"
 
-const Navbar = () => {
+interface NavbarProps {
+    forceVisible?: boolean
+}
+
+const Navbar = ({ forceVisible = false }: NavbarProps) => {
     const [isScrolled, setIsScrolled] = useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const [showBrownBg, setShowBrownBg] = useState(false)
@@ -20,8 +24,8 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
-    // Show brown background when scrolled OR when hovered
-    const shouldShowBrownBg = isScrolled || showBrownBg
+    // Show brown background when scrolled OR when hovered OR when forceVisible is true
+    const shouldShowBrownBg = forceVisible || isScrolled || showBrownBg
 
     return (
         <motion.nav
@@ -39,24 +43,9 @@ const Navbar = () => {
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
             >
-                <button
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    className="md:hidden"
-                >
-                    {isMobileMenuOpen ? (
-                        <RiCloseLine
-                            size={24}
-                            className={shouldShowBrownBg ? 'text-ayaoba-brown' : 'text-background'}
-                        />
-                    ) : (
-                        <RiMenuLine
-                            size={24}
-                            className={shouldShowBrownBg ? 'text-ayaoba-brown' : 'text-background'}
-                        />
-                    )}
-                </button>
-
-                <LogoSVG className="w-[120px] md:w-[200px] h-auto" fill={shouldShowBrownBg ? '#A05C01' : '#FFF5DF'}/>
+                <Link href="/">
+                    <LogoSVG className="w-[120px] md:w-[200px] h-auto" fill={shouldShowBrownBg ? '#A05C01' : '#FFF5DF'} />
+                </Link>
             </motion.div>
 
             {/* Right Section - Desktop */}
@@ -79,16 +68,18 @@ const Navbar = () => {
                         className={shouldShowBrownBg ? 'text-ayaoba-brown' : 'text-background'}
                     />
                 </motion.div>
-                <motion.div
-                    whileHover={{ scale: 1.2, rotate: -5 }}
-                    transition={{ duration: 0.2 }}
-                    className="cursor-pointer"
-                >
-                    <RiUserLine
-                        size={24}
-                        className={shouldShowBrownBg ? 'text-ayaoba-brown' : 'text-background'}
-                    />
-                </motion.div>
+                <Link href="/account">
+                    <motion.div
+                        whileHover={{ scale: 1.2, rotate: -5 }}
+                        transition={{ duration: 0.2 }}
+                        className="cursor-pointer"
+                    >
+                        <RiUserLine
+                            size={24}
+                            className={shouldShowBrownBg ? 'text-ayaoba-brown' : 'text-background'}
+                        />
+                    </motion.div>
+                </Link>
             </div>
 
             {/* Right Section - Mobile Icons */}
@@ -103,16 +94,34 @@ const Navbar = () => {
                         className={shouldShowBrownBg ? 'text-ayaoba-brown' : 'text-background'}
                     />
                 </motion.div>
-                <motion.div
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="cursor-pointer"
+                <Link href="/account">
+                    <motion.div
+                        whileHover={{ scale: 1.2 }}
+                        whileTap={{ scale: 0.9 }}
+                        className="cursor-pointer"
+                    >
+                        <RiUserLine
+                            size={20}
+                            className={shouldShowBrownBg ? 'text-ayaoba-brown' : 'text-background'}
+                        />
+                    </motion.div>
+                </Link>
+                <button
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    className="md:hidden"
                 >
-                    <RiUserLine
-                        size={20}
-                        className={shouldShowBrownBg ? 'text-ayaoba-brown' : 'text-background'}
-                    />
-                </motion.div>
+                    {isMobileMenuOpen ? (
+                        <RiCloseLine
+                            size={24}
+                            className={shouldShowBrownBg ? 'text-ayaoba-brown' : 'text-background'}
+                        />
+                    ) : (
+                        <RiMenuLine
+                            size={24}
+                            className={shouldShowBrownBg ? 'text-ayaoba-brown' : 'text-background'}
+                        />
+                    )}
+                </button>
             </div>
 
             {/* Mobile Menu */}
